@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS Homework № 2</title>
+    <script>
+
+
+		// 1. Почему код даёт именно такие результаты?
+		var a = 1, b = 1, c, d;
+		c = ++a; alert(c); // 2 - префиксная форма - возвращает новое значение: a=1+1=2, с=a=2
+		d = b++; alert(d); // 1 - постфиксная форма - возвращает старое значение: d=b=1 (затем b=1+1=2)
+		c = (2+ ++a); alert(c); // 5 префиксная форма: a=2+1=3 c=2+a=2+3=5
+		d = (2+ b++); alert(d); // 4 постфиксная форма: d=2+2=4 (b было увеличено ранее) (затем b=2+1=3)
+		alert(a); // 3 (переменная a была инкрементирована 2 раза выше)
+		alert(b); // 3 (переменная b была инкрементирована 2 раза выше)
+
+
+		// 2. Чему будет равен x в примере ниже?
+		var a = 2;
+		var x = 1 + (a *= 2); // Сначала вычисляется a=2*2=4, затем x=1+a=a+4=5
+		// Переменная x будет равна 5
+
+
+		/* 3. Объявить две целочисленные переменные a и b и задать им произвольные начальные значения. Затем написать скрипт, который работает по следующему принципу:	
+		если a и b положительные, вывести их разность;
+		если а и b отрицательные, вывести их произведение;
+		если а и b разных знаков, вывести их сумму; ноль можно считать положительным числом. */
+
+		var a = 20, b = -5;
+		// если a и b положительные, вывести их разность
+		if (a >= 0 && b >= 0){  
+			alert("a-b = " + a + "-" + b + " = " + (a-b));
+		} 
+		// если а и b отрицательные, вывести их произведение
+		else if (a < 0 && b < 0){
+			alert("a*b = " + a + "*" + b + " = " + (a*b));
+		}
+		// если а и b разных знаков, вывести их сумму; ноль можно считать положительным числом
+		else {
+			alert("a+b = " + a + "+" + b + " = " + (a+b));
+		}
+
+
+		// 4. Присвоить переменной а значение в промежутке [0..15]. С помощью оператора switch организовать вывод чисел от a до 15.
+		var a = (Math.random() * 15).toFixed(0);
+		var s = "";	    
+		switch(a){
+		case "0":
+		    s += "0 ";
+		case "1":
+		    s += "1 ";
+		case "2":
+		    s += "2 ";
+		case "3":
+		    s += "3 ";
+		case "4":
+		    s += "4 ";
+		case "5":
+		    s += "5 ";
+		case "6":
+		    s += "6 ";
+		case "7":
+		    s += "7 ";
+		case "8":
+		    s += "8 ";
+		case "9":
+		    s += "9 ";
+		case "10":
+		    s += "10 ";
+		case "11":
+		    s += "11 ";
+		case "12":
+		    s += "12 ";
+		case "13":
+		    s += "13 ";
+		case "14":
+		    s += "14 ";
+		case "15":
+		    s += "15";
+		}
+		alert(s);
+
+
+		// Использование рекурсии
+		function get_str15(arg){
+			if (arg == 15){
+				return "15";
+			}
+			else {
+				return arg+" "+get_str15(parseInt(arg) + 1);
+			}
+		}
+		alert(get_str15(a));
+
+
+		// 5. Реализовать основные 4 арифметические операции в виде функций с двумя параметрами. Обязательно использовать оператор return.
+		function get_sum(x, y){
+		    return x + y;
+		}
+		function get_subtraction(x, y){
+		    return x - y;
+		}
+		function get_multiplication(x, y){
+		    return x * y;
+		}
+		function get_division(x, y){
+			// В js можно не делать проверку на ноль, функция вернет infinity
+		    return x / y;
+		}
+		alert("get_sum(2, 3) = " + get_sum(2, 3));
+		alert("get_subtraction(2, 3) = " + get_subtraction(2, 3));
+		alert("get_multiplication(2, 3) = " + get_multiplication(2, 3));
+		alert("get_division(2, 3) = " + get_division(2, 3));
+
+
+		/* 6. Реализовать функцию с тремя параметрами: function mathOperation(arg1, arg2, operation), где arg1, arg2 – значения аргументов, operation – строка с названием операции. В зависимости от переданного значения операции выполнить одну из арифметических операций (использовать функции из пункта 5) и вернуть полученное значение (использовать switch). */
+
+		function mathOperation(arg1, arg2, operation){
+			switch(operation){
+			case "sum":
+				return get_sum(arg1, arg2);
+			case "sub":
+				return get_subtraction(arg1, arg2);
+			case "mult":
+				return get_multiplication(arg1, arg2);
+			case "div":
+				return get_division(arg1, arg2);
+			default:
+				alert("Неизвестная операция:" + operation);
+				return undefined;
+			}
+		}
+
+		alert("mathOperation(2, 3, 'sum') = " + mathOperation(2, 3, 'sum'));
+		alert("mathOperation(2, 3, 'sub') = " + mathOperation(2, 3, 'sub'));
+		alert("mathOperation(2, 3, 'mult') = " + mathOperation(2, 3, 'mult'));
+		alert("mathOperation(2, 3, 'div') = " + mathOperation(2, 3, 'div'));
+		alert("mathOperation(2, 3, 'power') = " + mathOperation(2, 3, 'power'));
+
+
+		// 7. *Сравнить null и 0. Попробуйте объяснить результат.
+		alert("null == 0 --> " + (null == 0)); // false
+		alert("null === 0 --> " + (null === 0)); // false
+		// Сравнение возвращает false, потому что null не равно никакому другому значению
+		// Исключение null == undefined (при нестрогом равенстве)
+		alert("null == undefined --> " + (null == undefined)); // true
+		// Эти значения ни к чему не приводятся, они равны друг другу и не равны ничему другому
+		alert("null == null --> " + (null == null)); // true
+		// При использовании операторов сравнения ( < > <= >=) null преобразуется в 0
+		alert("null >= 0  --> " + (null >= 0)); // true
+
+
+		// 8. *С помощью рекурсии организовать функцию возведения числа в степень. Формат: function power(val, pow), где val – заданное число, pow – степень.
+
+		function power(val, pow){
+			if (pow == 1){
+				return val;
+			}
+			else{
+				return val * power(val, pow-1);
+			}
+		}
+		alert("power(2, 3) = " + power(2, 3));
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>
