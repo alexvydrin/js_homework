@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS Homework № 4-3</title>
+    <script>     
+		
+		// функция для создания вопросов к игре
+		function Question(text,a1,a2,a3,a4,correct,reward){
+	        this.text = text;
+	        this.answer1 = a1;
+	        this.answer2 = a2;
+	        this.answer3 = a3;
+	        this.answer4 = a4;
+	        this.correct = correct;
+	        this.reward = reward;
+	        this.showQuestion = function(){
+            	return this.text +
+            		"\n 1. " + this.answer1 +
+            		"\n 2. " + this.answer2 +
+            		"\n 3. " + this.answer3 +
+            		"\n 4. " + this.answer4;
+        	}      
+    	}
+    
+    	// создаем вопросы
+		var questions = [];    	
+		questions.push(new Question("Сколько спутников у Марса",
+			"1", "2", "3", "0", 2, 100));
+		
+		questions.push(new Question("Год первого полета человека в космос",
+			"1957", "1961", "1965", "1969", 2, 200));
+		
+		questions.push(new Question("Год высадки человека на Луну",
+			"1957", "1961", "1965", "1969", 4, 300));
+
+		// викторина
+		n = 0;
+		reward = 0;
+		for (question of questions) {						
+			n++;
+        	do {	            
+            	event = +prompt("Вопрос № " + n + " из " + questions.length + 
+					". Награда за вопрос = " + question.reward + " \n" +
+					question.showQuestion() + "\n-1 - Выход из игры");
+            	if (event == -1){
+            		n = -1; // Признак досрочного выхода из игры            		
+            		break;
+            	}
+ 				if (isNaN(event) || !isFinite(event) || event < 1 || event > 4){
+ 					alert('Вы ввели недопустимый ответ, повторите ввод');
+ 					continue; 					
+    			}
+    			if (event == question.correct){
+    				reward += question.reward;
+    				alert("И это правильный ответ");
+    			} else {
+    				alert("Это ошибка");
+    			}
+    			break;
+    		} while (true);
+    		if (n == -1){ // Признак досрочного выхода из игры
+    			break;
+    		}
+    	}
+		
+		alert("Ваш результат=" + reward + "\nСпасибо за игру");
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
