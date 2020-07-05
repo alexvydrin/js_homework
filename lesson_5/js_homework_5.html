@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS Homework № 5</title>
+</head>
+<body>
+
+<script>
+
+    /*
+    1. Создать функцию, генерирующую шахматную доску.
+    При этом можно использовать любые html-теги по своему желанию.
+    Доска должна быть разлинована соответствующим образом,
+    т.е. чередовать черные и белые ячейки.
+    Строки должны нумероваться числами от 1 до 8,
+    столбцы – латинскими буквами A, B, C, D, E, F, G, H.
+    2. Заполнить созданную таблицу буквами, отвечающими за шахматную фигуру,
+    например К – король, Ф – ферзь и т.п.,
+    причем все фигуры должны стоять на своих местах и быть соответственно черными и белыми.
+    3. *Заменить буквы, обозначающие фигуры, картинками.
+    */
+
+    // Названия столбцов
+    var letters = ["A","B","C","D","E","F","G","H"]; 
+
+    // Так как подозреваю, что на следующих уроках будем фигуры двигать,
+    // то лучше сразу организуем хранение фигур как массив объектов
+
+    // функция для создания фигур
+    function Сhessman(code,color,symbol,i,j){
+        this.code = code;
+        this.color = color; // B - black, W - white
+        this.symbol = symbol;
+        this.i = i;
+        this.j = j;
+        this.showСhessman = function(){
+            // Вывод в виде кода (задание №2)
+            // return this.code + "-" + this.color;
+            // Вывод в виде символа (задание №3)
+            return this.symbol;
+        }
+    }
+
+    // создаем фигуры
+    var chessmen = [];
+    // пешка p-
+    for (var i=1; i<=8; i++){
+        chessmen.push(new Сhessman("p", "B", "&#9823", 2, i));
+        chessmen.push(new Сhessman("p", "W", "&#9817", 7, i));
+    }
+    // ладья R-rook
+    chessmen.push(new Сhessman("R", "B", "&#9820", 1, 1));
+    chessmen.push(new Сhessman("R", "B", "&#9820", 1, 8));
+    chessmen.push(new Сhessman("R", "W", "&#9814", 8, 1));
+    chessmen.push(new Сhessman("R", "W", "&#9814", 8, 8));
+    // Конь N-kNight
+    chessmen.push(new Сhessman("N", "B", "&#9822", 1, 2));
+    chessmen.push(new Сhessman("N", "B", "&#9822", 1, 7));
+    chessmen.push(new Сhessman("N", "W", "&#9816", 8, 2));
+    chessmen.push(new Сhessman("N", "W", "&#9816", 8, 7));
+    // Слон B-bishop
+    chessmen.push(new Сhessman("B", "B", "&#9821", 1, 3));
+    chessmen.push(new Сhessman("B", "B", "&#9821", 1, 6));
+    chessmen.push(new Сhessman("B", "W", "&#9815", 8, 3));
+    chessmen.push(new Сhessman("B", "W", "&#9815", 8, 6));
+    // Ферзь Q-queen
+    chessmen.push(new Сhessman("Q", "B", "&#9819", 1, 4));
+    chessmen.push(new Сhessman("Q", "W", "&#9813", 8, 4));
+    // Король K-king
+    chessmen.push(new Сhessman("K", "B", "&#9818", 1, 5));
+    chessmen.push(new Сhessman("K", "W", "&#9812", 8, 5));
+
+    // отрисовываем доску
+    var chessboard = document.createElement('table');    
+    chessboard.style="border-collapse: collapse;"
+    document.body.append(chessboard);
+    var row, td;
+    for (var i=0; i<10; i++){
+        row = document.createElement('tr');
+        chessboard.append(row);
+        for (var j=0; j<10; j++){
+            td = document.createElement('td');            
+            row.append(td);                        
+            s = "height: 80px; width: 80px; text-align: center;";
+            if (i!=0 && i!=9 && j!=0 && j!=9){
+                s+= "border: 1px solid black; font-size: 300%;";                
+                if ((i+j)%2){
+                    s+= "background: grey;";
+                }
+            }
+
+            if (i==0 || j==9){
+                s+= "transform: rotate(180deg);";
+            }
+
+            td.style = s;
+            
+            if (i==0 || i==9){ // Рисуем буквы
+                if (j!=0 && j!=9){                                
+                    td.innerHTML = letters[j-1];
+                }            
+            } else if (j==0 || j==9){ // Рисуем цифры
+                if (i!=0 && i!=9){
+                    td.innerHTML = 9-i;
+                }
+            } else { // Рисуем фигуры
+                // Ищем есть ли в данной клетке какая-либо фигура
+                for (var chessman of chessmen){
+                    if ((chessman.i == i) && (chessman.j == j)){
+                        td.innerHTML = chessman.showСhessman();
+                        break;
+                        // выходим из цикла так как 
+                        // больше одной фигуры на клетке быть не может
+                    }
+                }                
+            }
+        }
+    }    
+        
+</script>
+</body>
+</html>
